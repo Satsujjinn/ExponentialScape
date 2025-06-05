@@ -11,7 +11,7 @@ export default async function Page() {
   const helloRes = await fetch(`${process.env.API_URL}/api/hello`, { cache: 'no-store' });
   const hello = await helloRes.json();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex flex-col items-center justify-center p-8 gap-4">
       <h1 className="text-4xl font-bold">Welcome to ExponentialScape</h1>
       <p className="mt-4">Your analytics and collaboration platform.</p>
       <p className="mt-2 text-sm text-gray-600">Page views: {views}</p>

@@ -1,6 +1,6 @@
 # ExponentialScape
 
-A minimal monorepo with a Next.js frontend and an Express backend. This repository demonstrates a simple setup using pnpm workspaces and now includes basic analytics and collaboration features.
+A minimal monorepo with a Next.js frontend and an Express backend. This repository demonstrates a simple setup using pnpm workspaces and now includes basic analytics and collaboration features. The site now provides a simple navigation bar and an About page.
 
 ## Features
 

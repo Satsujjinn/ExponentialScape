@@ -46,7 +46,7 @@ export default function MessageBoard() {
       <h2 className="text-xl font-semibold mb-2">Message Board</h2>
       <form onSubmit={submit} className="flex gap-2">
         <input
-          className="flex-1 border rounded px-2 py-1"
+          className="flex-1 border rounded px-2 py-1 dark:bg-gray-800 dark:border-gray-700"
           value={text}
           onChange={e => setText(e.target.value)}
           placeholder="Write a message"
@@ -57,13 +57,13 @@ export default function MessageBoard() {
       </form>
       <ul className="mt-4 space-y-2">
         {messages.map(m => (
-          <li key={m.id} className="border p-2 rounded space-y-1">
+          <li key={m.id} className="border p-2 rounded space-y-1 dark:border-gray-700">
             <div>{m.text}</div>
             <div className="text-xs text-gray-500">
               {new Date(m.timestamp).toLocaleString()}
             </div>
             <button
-              className="text-sm text-blue-600"
+              className="text-sm text-blue-600 dark:text-blue-400"
               onClick={() => like(m.id)}
               type="button"
             >

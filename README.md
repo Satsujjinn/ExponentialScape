@@ -1,11 +1,12 @@
 # ExponentialScape
 
-A minimal monorepo with a Next.js frontend and an Express backend. This repository demonstrates a simple setup using pnpm workspaces and now includes basic analytics and collaboration features. The site now provides a simple navigation bar and an About page.
+A minimal monorepo with a Next.js frontend and an Express backend. This repository demonstrates a simple setup using pnpm workspaces and now includes basic analytics and collaboration features. The site now provides a simple navigation bar and an About page. A new dark mode toggle brings the UI in line with modern 2025 design trends.
 
 ## Features
 
 - **Analytics:** The backend tracks how many times the homepage has been viewed.
 - **Collaboration:** A simple message board lets visitors leave short messages.
+- **Dark Mode:** Toggle between light and dark themes to match your preference.
 
 ## Development
 

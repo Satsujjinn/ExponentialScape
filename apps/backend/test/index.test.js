@@ -12,6 +12,8 @@ describe('API', () => {
     const res = await request(app).post('/api/messages').send({ text: 'Test' });
     expect(res.statusCode).toBe(201);
     expect(res.body.text).toBe('Test');
+    const del = await request(app).delete(`/api/messages/${res.body.id}`);
+    expect(del.statusCode).toBe(200);
   });
 
   it('rejects empty message', async () => {

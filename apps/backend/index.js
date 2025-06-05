@@ -52,6 +52,16 @@ app.post('/api/messages/:id/like', (req, res) => {
   res.json(message);
 });
 
+app.delete('/api/messages/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const index = messages.findIndex(m => m.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'Message not found' });
+  }
+  const [deleted] = messages.splice(index, 1);
+  res.json(deleted);
+});
+
 app.get('/api/contact', (req, res) => {
   res.json({ contacts });
 });

@@ -11,6 +11,9 @@ export default function Navbar() {
       <Link href="/about" className="hover:underline">
         About
       </Link>
+      <Link href="/contact" className="hover:underline">
+        Contact
+      </Link>
       <ThemeToggle />
     </nav>
   )

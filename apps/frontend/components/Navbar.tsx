@@ -14,6 +14,9 @@ export default function Navbar() {
       <Link href="/contact" className="hover:underline">
         Contact
       </Link>
+      <Link href="/metrics" className="hover:underline">
+        Metrics
+      </Link>
       <ThemeToggle />
     </nav>
   )

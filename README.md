@@ -7,6 +7,7 @@ A minimal monorepo with a Next.js frontend and an Express backend. This reposito
 - **Analytics:** The backend tracks how many times the homepage has been viewed.
 - **Collaboration:** A simple message board lets visitors leave short messages.
 - **Dark Mode:** Toggle between light and dark themes to match your preference.
+- **Contact Form:** Visitors can send inquiries via the new contact page.
 
 ## Development
 

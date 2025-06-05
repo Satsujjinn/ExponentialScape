@@ -5,6 +5,7 @@ const helmet = require('helmet');
 
 let views = 0;
 const messages = [];
+const contacts = [];
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -49,6 +50,30 @@ app.post('/api/messages/:id/like', (req, res) => {
   }
   message.likes += 1;
   res.json(message);
+});
+
+app.get('/api/contact', (req, res) => {
+  res.json({ contacts });
+});
+
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+  if (
+    typeof name !== 'string' || !name.trim() ||
+    typeof email !== 'string' || !email.trim() ||
+    typeof message !== 'string' || !message.trim()
+  ) {
+    return res.status(400).json({ error: 'Name, email and message required' });
+  }
+  const entry = {
+    id: Date.now(),
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+    timestamp: new Date().toISOString(),
+  };
+  contacts.push(entry);
+  res.status(201).json({ success: true });
 });
 
 if (require.main === module) {

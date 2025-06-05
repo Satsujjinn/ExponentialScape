@@ -43,8 +43,18 @@ app.get('/api/views', (req, res) => {
   res.json({ views });
 });
 
+app.get('/api/metrics', (req, res) => {
+  res.json({ views, messageCount: messages.length });
+});
+
 app.get('/api/messages', (req, res) => {
-  res.json({ messages });
+  let result = [...messages];
+  if (req.query.sort === 'likes') {
+    result.sort((a, b) => b.likes - a.likes);
+  } else if (req.query.sort === 'new') {
+    result.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  }
+  res.json({ messages: result });
 });
 
 app.post('/api/messages', (req, res) => {

@@ -33,4 +33,24 @@ describe('API', () => {
     const res = await request(app).post('/api/contact').send({});
     expect(res.statusCode).toBe(400);
   });
+
+  it('returns metrics', async () => {
+    await request(app).post('/api/views');
+    const res = await request(app).get('/api/metrics');
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('views');
+    expect(res.body).toHaveProperty('messageCount');
+  });
+
+  it('sorts messages by likes', async () => {
+    const first = await request(app).post('/api/messages').send({ text: 'First' });
+    const second = await request(app).post('/api/messages').send({ text: 'Second' });
+    await request(app).post(`/api/messages/${second.body.id}/like`);
+    const res = await request(app).get('/api/messages?sort=likes');
+    expect(res.statusCode).toBe(200);
+    const [top] = res.body.messages;
+    expect(top.id).toBe(second.body.id);
+    await request(app).delete(`/api/messages/${first.body.id}`);
+    await request(app).delete(`/api/messages/${second.body.id}`);
+  });
 });

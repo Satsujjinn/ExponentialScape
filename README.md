@@ -12,3 +12,11 @@ pnpm dev
 ```
 
 The frontend runs on [http://localhost:3000](http://localhost:3000) and the backend API is available at [http://localhost:3001/api/hello](http://localhost:3001/api/hello).
+
+### Environment
+
+You can override the backend URL by setting the `API_URL` environment variable before running the frontend:
+
+```bash
+API_URL="http://localhost:3001" pnpm dev
+```

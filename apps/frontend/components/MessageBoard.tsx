@@ -20,6 +20,13 @@ export default function MessageBoard() {
     }
   }
 
+  const remove = async (id: number) => {
+    const res = await fetch(`${process.env.API_URL}/api/messages/${id}`, { method: 'DELETE' })
+    if (res.ok) {
+      setMessages(prev => prev.filter(m => m.id !== id))
+    }
+  }
+
   useEffect(() => {
     fetch(`${process.env.API_URL}/api/messages`).then(res => res.json()).then(data => {
       setMessages(data.messages)
@@ -68,6 +75,13 @@ export default function MessageBoard() {
               type="button"
             >
               Like ({m.likes})
+            </button>
+            <button
+              className="text-sm text-red-600 dark:text-red-400 ml-2"
+              onClick={() => remove(m.id)}
+              type="button"
+            >
+              Delete
             </button>
           </li>
         ))}

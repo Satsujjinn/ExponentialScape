@@ -5,11 +5,20 @@ interface Message {
   id: number
   text: string
   timestamp: string
+  likes: number
 }
 
 export default function MessageBoard() {
   const [messages, setMessages] = useState<Message[]>([])
   const [text, setText] = useState('')
+
+  const like = async (id: number) => {
+    const res = await fetch(`${process.env.API_URL}/api/messages/${id}/like`, { method: 'POST' })
+    if (res.ok) {
+      const updated = await res.json()
+      setMessages(prev => prev.map(m => (m.id === id ? updated : m)))
+    }
+  }
 
   useEffect(() => {
     fetch(`${process.env.API_URL}/api/messages`).then(res => res.json()).then(data => {
@@ -48,11 +57,18 @@ export default function MessageBoard() {
       </form>
       <ul className="mt-4 space-y-2">
         {messages.map(m => (
-          <li key={m.id} className="border p-2 rounded">
+          <li key={m.id} className="border p-2 rounded space-y-1">
             <div>{m.text}</div>
             <div className="text-xs text-gray-500">
               {new Date(m.timestamp).toLocaleString()}
             </div>
+            <button
+              className="text-sm text-blue-600"
+              onClick={() => like(m.id)}
+              type="button"
+            >
+              Like ({m.likes})
+            </button>
           </li>
         ))}
       </ul>

@@ -36,9 +36,19 @@ app.post('/api/messages', (req, res) => {
   if (typeof text !== 'string' || !text.trim()) {
     return res.status(400).json({ error: 'Message text required' });
   }
-  const message = { id: Date.now(), text: text.trim(), timestamp: new Date().toISOString() };
+  const message = { id: Date.now(), text: text.trim(), timestamp: new Date().toISOString(), likes: 0 };
   messages.push(message);
   res.status(201).json(message);
+});
+
+app.post('/api/messages/:id/like', (req, res) => {
+  const id = Number(req.params.id);
+  const message = messages.find(m => m.id === id);
+  if (!message) {
+    return res.status(404).json({ error: 'Message not found' });
+  }
+  message.likes += 1;
+  res.json(message);
 });
 
 app.listen(PORT, () => {

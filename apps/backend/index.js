@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const xss = require('xss');
 
 let views = 0;
 const messages = [];
@@ -10,8 +12,21 @@ const contacts = [];
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : undefined;
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(allowedOrigins ? { origin: allowedOrigins } : {}));
+if (process.env.NODE_ENV !== 'test') {
+  app.use(limiter);
+}
 app.use(compression());
 app.use(helmet());
 
@@ -37,7 +52,7 @@ app.post('/api/messages', (req, res) => {
   if (typeof text !== 'string' || !text.trim()) {
     return res.status(400).json({ error: 'Message text required' });
   }
-  const message = { id: Date.now(), text: text.trim(), timestamp: new Date().toISOString(), likes: 0 };
+  const message = { id: Date.now(), text: xss(text.trim()), timestamp: new Date().toISOString(), likes: 0 };
   messages.push(message);
   res.status(201).json(message);
 });
@@ -77,9 +92,9 @@ app.post('/api/contact', (req, res) => {
   }
   const entry = {
     id: Date.now(),
-    name: name.trim(),
-    email: email.trim(),
-    message: message.trim(),
+    name: xss(name.trim()),
+    email: xss(email.trim()),
+    message: xss(message.trim()),
     timestamp: new Date().toISOString(),
   };
   contacts.push(entry);
